@@ -35,7 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'it_task_manager'
+    'task_manager'
 ]
 
 MIDDLEWARE = [
@@ -118,4 +118,4 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = "it_task_manager.Worker"
+AUTH_USER_MODEL = "task_manager.Worker"
