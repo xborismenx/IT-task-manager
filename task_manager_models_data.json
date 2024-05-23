@@ -1,0 +1,97 @@
+[
+  {
+    "model": "task_manager.position",
+    "pk": 1,
+    "fields": {
+      "name": "Developer"
+    }
+  },
+  {
+    "model": "task_manager.position",
+    "pk": 2,
+    "fields": {
+      "name": "Designer"
+    }
+  },
+  {
+    "model": "task_manager.position",
+    "pk": 3,
+    "fields": {
+      "name": "Project Manager"
+    }
+  },
+  {
+    "model": "task_manager.position",
+    "pk": 4,
+    "fields": {
+      "name": "Quality Assurance"
+    }
+  },
+  {
+    "model": "task_manager.worker",
+    "pk": 1,
+    "fields": {
+      "username": "john_doe",
+      "password": "pbkdf2_sha256$260000$...$...",
+      "email": "john_doe@example.com",
+      "position": 1
+    }
+  },
+  {
+    "model": "task_manager.worker",
+    "pk": 2,
+    "fields": {
+      "username": "jane_smith",
+      "password": "pbkdf2_sha256$260000$...$...",
+      "email": "jane_smith@example.com",
+      "position": 2
+    }
+  },
+  {
+    "model": "task_manager.tasktype",
+    "pk": 1,
+    "fields": {
+      "name": "Bug"
+    }
+  },
+  {
+    "model": "task_manager.tasktype",
+    "pk": 2,
+    "fields": {
+      "name": "Feature"
+    }
+  },
+  {
+    "model": "task_manager.tasktype",
+    "pk": 3,
+    "fields": {
+      "name": "Improvement"
+    }
+  },
+  {
+    "model": "task_manager.task",
+    "pk": 1,
+    "fields": {
+      "name": "Fix login bug",
+      "description": "There is a bug preventing users from logging in.",
+      "deadline": "2024-05-30T12:00:00Z",
+      "is_completed": false,
+      "priority": "1",
+      "task_type": 1,
+      "assignees": [1]
+    }
+  },
+  {
+    "model": "task_manager.task",
+    "pk": 2,
+    "fields": {
+      "name": "Design homepage",
+      "description": "Create a new design for the homepage.",
+      "deadline": "2024-06-05T12:00:00Z",
+      "is_completed": false,
+      "priority": "2",
+      "task_type": 2,
+      "assignees": [2]
+    }
+  }
+]
