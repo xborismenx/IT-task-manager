@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="text-center mt-2">Workers info</h1>
+{% for worker in worker_list %}
+<div class="container mt-3 mb-3">
+        <div class="card">
+            <div class="card-header">
+                <h3>username: {{ worker.username }}</h3>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">full name:{{ worker.get_full_name }}</h5>
+                <p class="card-text"><strong>Position:</strong> {{ worker.position.name }}</p>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+{% endblock %}
