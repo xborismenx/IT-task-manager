@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="container mt-5">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="card-title">Task Details</h5>
+      </div>
+      <div class="card-body">
+        <h6 class="card-subtitle mb-2 text-muted">Name: {{ task.name }}</h6>
+        <p class="card-text"><strong>Description:</strong> {{ task.description }}</p>
+        <p class="card-text"><strong>Deadline:</strong> {{ task.deadline }}</p>
+        <p class="card-text"><strong>Priority:</strong>
+          {% if task.priority == '1' %}
+            Urgent
+          {% elif task.priority == '2' %}
+            High
+          {% elif task.priority == '3' %}
+            Medium
+          {% else %}
+            Low
+          {% endif %}
+        </p>
+        <p class="card-text"><strong>Task Type:</strong> {{ task.task_type.name }}</p>
+        <p class="card-text"><strong>Assignees:</strong>
+          {% for assignee in task.assignees.all %}
+            {{ assignee.username }} 
+          {% endfor %}
+        </p>
+        <p class="card-text"><strong>Status:</strong> {% if task.is_completed %}Completed{% else %}Pending{% endif %}
+        </p>
+      </div>
+    </div>
+  </div>
+{% endblock %}
