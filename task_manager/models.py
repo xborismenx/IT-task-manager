@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.urls import reverse
 
 
 class Position(models.Model):
@@ -18,6 +19,9 @@ class Worker(AbstractUser):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name} ({self.username}) - position {self.position}"
+
+    def get_absolute_url(self):
+        return reverse("task_manager:worker-update", kwargs={"pk": self.pk})
 
 
 class TaskType(models.Model):
@@ -45,3 +49,6 @@ class Task(models.Model):
     )
     task_type = models.ForeignKey(TaskType, on_delete=models.SET_NULL, null=True, blank=True)
     assignees = models.ManyToManyField(Worker, related_name="tasks")
+
+    def get_absolute_url(self):
+        return reverse("task_manager:task-detail", kwargs={"pk": self.pk})
