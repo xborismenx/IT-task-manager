@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.views import generic
 
+from task_manager.forms import SearchTaskForm
 from task_manager.models import Task, Worker
 
 
@@ -17,10 +18,24 @@ def index(request):
 
 class TaskListView(generic.ListView):
     model = Task
-    queryset = Task.objects.select_related('task_type').prefetch_related('assignees')
     paginate_by = 2
     template_name = "task_manager/task_list.html"
     context_object_name = "task_list"
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        name = self.request.GET.get("name", "")
+        context["search_form"] = SearchTaskForm(
+            initial={"name": name}
+        )
+        return context
+
+    def get_queryset(self):
+        queryset = Task.objects.select_related('task_type').prefetch_related('assignees')
+        name = self.request.GET.get("name")
+        if name:
+            return queryset.filter(name__icontains=name)
+        return queryset
 
 
 class TaskCreateView(generic.CreateView):
