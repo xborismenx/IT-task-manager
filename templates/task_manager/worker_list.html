@@ -1,17 +1,25 @@
 {% extends "base.html" %}
 {% block content %}
-<h1 class="text-center mt-2">Workers info</h1>
-{% for worker in worker_list %}
-<div class="container mt-3 mb-3">
-        <div class="card">
-            <div class="card-header">
-                <h3>username: {{ worker.username }}</h3>
-            </div>
-            <div class="card-body">
-                <h5 class="card-title">full name:{{ worker.get_full_name }}</h5>
-                <p class="card-text"><strong>Position:</strong> {{ worker.position.name }}</p>
-            </div>
-        </div>
+  <div class="container mt-3 mb-3">
+    <div class="d-flex justify-content-center">
+      <h1>Worker 
+        <a class="btn btn-primary pl-2" href="{% url 'task_manager:worker-create' %}">Add worker</a>
+      </h1>
     </div>
-{% endfor %}
+    {% for worker in worker_list %}
+
+      <div class="card mt-3">
+        <div class="card-header">
+          <h3>
+            <a href="{% url 'task_manager:worker-update' pk=worker.pk %}" class="text-decoration-none">username: {{ worker.username }}</a>
+          </h3>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">full name:{{ worker.get_full_name }}</h5>
+          <p class="card-text"><strong>Position:</strong> {{ worker.position.name }}</p>
+        </div>
+      </div>
+
+    {% endfor %}
+  </div>
 {% endblock %}
