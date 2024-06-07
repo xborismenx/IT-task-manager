@@ -1,7 +1,40 @@
 from django import forms
 from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import UserCreationForm
 
 from task_manager.models import Task, Worker
+
+
+class WorkerRegistrationForm(UserCreationForm):
+    username = forms.CharField(
+        label="username",
+        widget=forms.TextInput(
+            attrs={'class': 'form-control form-control-lg', "placeholder": "username"}
+        )
+    )
+    email = forms.EmailField(
+        label="email",
+        widget=forms.EmailInput(
+            attrs={'class': 'form-control form-control-lg', "placeholder": "email"}
+        )
+    )
+    password1 = forms.CharField(
+        label="password",
+        widget=forms.PasswordInput(
+            attrs={'class': 'form-control form-control-lg', "placeholder": "password"}
+        )
+    )
+
+    password2 = forms.CharField(
+        label="password",
+        widget=forms.PasswordInput(
+            attrs={'class': 'form-control form-control-lg', "placeholder": "password confirmation"}
+        )
+    )
+
+    class Meta:
+        model = Worker
+        fields = ("username", "email", "password1", "password2")
 
 
 class TaskForm(forms.ModelForm):
