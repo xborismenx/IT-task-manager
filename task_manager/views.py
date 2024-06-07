@@ -1,8 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
 from django.views import generic
 
-from task_manager.forms import SearchTaskForm
+from task_manager.forms import SearchTaskForm, TaskForm, WorkerRegistrationForm
 from task_manager.models import Task, Worker
 
 
@@ -40,7 +40,7 @@ class TaskListView(generic.ListView):
 
 class TaskCreateView(generic.CreateView):
     model = Task
-    fields = "__all__"
+    form_class = TaskForm
     success_url = reverse_lazy("task_manager:task-list")
     template_name = "task_manager/task_form.html"
 
@@ -81,3 +81,20 @@ class WorkerUpdateView(generic.UpdateView):
     fields = "__all__"
     success_url = reverse_lazy("task_manager:worker")
     template_name = "task_manager/worker_form.html"
+
+
+class WorkerRegisterView(generic.View):
+    form_class = WorkerRegistrationForm
+    template_name = "registration/sign-up.html"
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()
+        return render(request, self.template_name, {"form": form})
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("login")
+
+        return render(request, self.template_name, {"form": form})
