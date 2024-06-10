@@ -26,17 +26,17 @@ class TaskListView(generic.ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         name = self.request.GET.get("name", "")
-        context["search_form"] = SearchTaskForm(
-            initial={"name": name}
-        )
+        context["search_form"] = SearchTaskForm(initial={"name": name})
+        context["filterset"] = self.filterset
         return context
 
     def get_queryset(self):
         queryset = Task.objects.select_related('task_type').prefetch_related('assignees')
         name = self.request.GET.get("name")
         if name:
-            return queryset.filter(name__icontains=name)
-        return queryset
+            queryset = queryset.filter(name__icontains=name)
+        self.filterset = TaskFilter(self.request.GET, queryset=queryset)
+        return self.filterset.qs
 
 
 class TaskCreateView(generic.CreateView):
