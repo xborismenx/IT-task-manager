@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
 from django.views import generic
 
-from task_manager.forms import SearchTaskForm, TaskForm, WorkerRegistrationForm
+from task_manager.filters import TaskFilter
+from task_manager.forms import SearchTaskForm, TaskForm, WorkerRegistrationForm, SearchWorkerForm
 from task_manager.models import Task, Worker
 
 
@@ -18,7 +19,7 @@ def index(request):
 
 class TaskListView(generic.ListView):
     model = Task
-    paginate_by = 2
+    paginate_by = 5
     template_name = "task_manager/task_list.html"
     context_object_name = "task_list"
 
@@ -67,6 +68,21 @@ class WorkerListView(generic.ListView):
     model = Worker
     template_name = "task_manager/worker_list.html"
     context_object_name = "worker_list"
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        name = self.request.GET.get("name", "")
+        context["search_form"] = SearchTaskForm(
+            initial={"name": name}
+        )
+        return context
+
+    def get_queryset(self):
+        queryset = Worker.objects.all()
+        username = self.request.GET.get("name")
+        if username:
+            return queryset.filter(username__icontains=username)
+        return queryset
 
 
 class WorkerCreateView(generic.CreateView):
