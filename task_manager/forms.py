@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, UsernameField, AuthenticationForm
 
 from task_manager.models import Task, Worker
 
@@ -55,6 +55,19 @@ class TaskForm(forms.ModelForm):
 
 
 class SearchTaskForm(forms.Form):
+    name = forms.CharField(
+        max_length=100,
+        required=False,
+        label="",
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "search by name"
+            }
+        )
+    )
+
+
+class SearchWorkerForm(forms.Form):
     name = forms.CharField(
         max_length=100,
         required=False,
