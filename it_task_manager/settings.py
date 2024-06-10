@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "debug_toolbar",
     "crispy_forms",
     "crispy_bootstrap4",
+    'django_filters',
 
     'task_manager',
 ]
@@ -128,7 +129,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = "task_manager.Worker"
 
-LOGIN_REDIRECT_URL = "/"
+LOGIN_REDIRECT_URL = "/tasks/"
 
 INTERNAL_IPS = ["127.0.0.1", ]
 
