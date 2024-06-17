@@ -16,6 +16,8 @@ def index(request):
     }
     return render(request, "task_manager/index.html", context=context)
 
+class AuthorisationView(generic.View):
+    template_name = 'task_manager/authorisation.html'
 
 class TaskListView(generic.ListView):
     model = Task
