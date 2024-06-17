@@ -1,12 +1,10 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Count
 from django.shortcuts import render, redirect
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse_lazy
 from django.views import generic
-
-from task_manager.filters import TaskFilter
-from task_manager.forms import SearchTaskForm, TaskForm, WorkerRegistrationForm, SearchWorkerForm
-from task_manager.models import Task, Worker
+from task_manager.forms import SearchTaskForm, TaskForm, WorkerRegistrationForm
+from task_manager.models import Task, Worker, TaskType
 
 
 def index(request):
@@ -103,7 +101,19 @@ class DeleteTaskView(LoginRequiredMixin, generic.DeleteView):
     template_name = "task_manager/task_confirm_delete.html"
 
 
-class WorkerListView(generic.ListView):
+class TaskTypeCreateView(LoginRequiredMixin, generic.CreateView):
+    model = TaskType
+    fields = "__all__"
+    success_url = reverse_lazy("task_manager:task-list")
+
+
+class TaskTypeDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = TaskType
+    success_url = reverse_lazy("task_manager:task-list")
+    template_name = "task_manager/tasktype_confirm_delete.html"
+
+
+class WorkerListView(LoginRequiredMixin, generic.ListView):
     model = Worker
     template_name = "task_manager/worker_list.html"
     context_object_name = "worker_list"
