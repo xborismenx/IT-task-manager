@@ -24,6 +24,17 @@ class TaskListView(LoginRequiredMixin, generic.ListView):
     template_name = "task_manager/task_list.html"
     context_object_name = "task_list"
 
+    def get_ordering(self):
+        ordering_deadline = self.request.GET.get('ordering', 'deadline')
+        if ordering_deadline not in ['deadline', '-deadline']:
+            ordering_deadline = 'deadline'
+
+        ordering_priority = self.request.GET.get('ordering', 'priority')
+        if ordering_priority not in ['priority', '-priority']:
+            ordering_priority = 'priority'
+
+        return ordering_deadline, ordering_priority
+
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         name = self.request.GET.get("name", "")
