@@ -1,10 +1,17 @@
 {% extends "base.html" %}
+{% load static %}
+
 {% block content %}
-  {% for task in task_list %}
-    <div class="container mt-3 mb-3">
-      <div class="card">
-        <div class="card-header">
-          <h3>Task Detail</h3>
+  <div class="row tm-content-row tm-mt-big p-2">
+    <div class="col-xl-8 col-lg-12 tm-md-12 tm-sm-12 tm-col">
+      <div class="bg-white tm-block h-100">
+        <div class="row">
+          <div class="col-md-12 col-sm-12">
+            <div class="d-flex justify-content-center align-items-center mb-3">
+              <h2 class="tm-block-title d-inline-block mb-0">Tasks</h2>
+              <a class="btn btn-primary m-2" id="add-task-btn" href="{% url 'task_manager:task-create' %}">+</a>
+            </div>
+          </div>
         </div>
         <form action="" method="get" class="form-inline d-flex justify-content-center align-items-center">
           {{ search_form }}
@@ -55,6 +62,7 @@
           </table>
           {% include 'includes/pagination.html' with task_list=task_list %}
         </div>
+
       </div>
     </div>
 
