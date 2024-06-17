@@ -1,3 +1,5 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Count
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
 from django.views import generic
@@ -76,26 +78,26 @@ class TaskListView(LoginRequiredMixin, generic.ListView):
         return queryset
 
 
-class TaskCreateView(generic.CreateView):
+class TaskCreateView(LoginRequiredMixin, generic.CreateView):
     model = Task
     form_class = TaskForm
     success_url = reverse_lazy("task_manager:task-list")
     template_name = "task_manager/task_form.html"
 
 
-class TaskDetailView(generic.DetailView):
+class TaskDetailView(LoginRequiredMixin, generic.DetailView):
     model = Task
     template_name = "task_manager/task_detail.html"
 
 
-class TaskUpdateView(generic.UpdateView):
+class TaskUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Task
     fields = "__all__"
     success_url = reverse_lazy("task_manager:task-list")
     template_name = "task_manager/task_form.html"
 
 
-class DeleteTaskView(generic.DeleteView):
+class DeleteTaskView(LoginRequiredMixin, generic.DeleteView):
     model = Task
     success_url = reverse_lazy("task_manager:task-list")
     template_name = "task_manager/task_confirm_delete.html"
@@ -122,14 +124,14 @@ class WorkerListView(generic.ListView):
         return queryset
 
 
-class WorkerCreateView(generic.CreateView):
+class WorkerCreateView(LoginRequiredMixin, generic.CreateView):
     model = Worker
     fields = "__all__"
     success_url = reverse_lazy("task_manager:worker-list")
     template_name = "task_manager/worker_form.html"
 
 
-class WorkerUpdateView(generic.UpdateView):
+class WorkerUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Worker
     fields = "__all__"
     success_url = reverse_lazy("task_manager:worker")
