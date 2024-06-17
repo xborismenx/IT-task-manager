@@ -14,7 +14,11 @@ def index(request):
 class AuthorisationView(generic.View):
     template_name = 'task_manager/authorisation.html'
 
-class TaskListView(generic.ListView):
+    def get(self, request, *args, **kwargs):
+        return render(request, 'task_manager/authorisation.html')
+
+
+class TaskListView(LoginRequiredMixin, generic.ListView):
     model = Task
     paginate_by = 5
     template_name = "task_manager/task_list.html"
