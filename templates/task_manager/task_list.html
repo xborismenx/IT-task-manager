@@ -57,7 +57,41 @@
         </div>
       </div>
     </div>
-  {% endfor %}
-  
+
+    <div class="col-xl-4 col-lg-12 tm-md-12 tm-sm-12 tm-col">
+      <div class="bg-white tm-block h-100">
+        <h2 class="tm-block-title d-inline-block">Task Types</h2>
+        <table class="table table-hover table-striped mt-3">
+          <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Counts</th>
+            <th scope="col">Delete</th>
+          </tr>
+          </thead>
+          <tbody>
+          {% for type in task_types %}
+            {% if type.task_count > 0 %}
+              <tr>
+                <td>{{ type.name }}</td>
+                <td>{{ type.task_count }}</td>
+                <td class="tm-trash-icon-cell">
+                  <a href="{% url 'task_manager:task-type-delete' pk=type.task_pk %}"><i
+                      class="fas fa-trash-alt tm-trash-icon"></i></a>
+                </td>
+              </tr>
+            {% endif %}
+          {% endfor %}
+          </tbody>
+        </table>
+
+        <a href="{% url 'task_manager:task-type-create' %}" class="btn btn-primary tm-table-mt">Add New Category</a>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
+
+
+
 
 {% endblock %}
