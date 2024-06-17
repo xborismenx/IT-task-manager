@@ -50,7 +50,10 @@
                 <td class="text-center">{{ task.get_priority_display }}</td>
               </tr>
             {% endfor %}
-          </p>
+
+            </tbody>
+          </table>
+          {% include 'includes/pagination.html' with task_list=task_list %}
         </div>
       </div>
     </div>
