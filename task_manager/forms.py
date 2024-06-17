@@ -61,7 +61,9 @@ class SearchTaskForm(forms.Form):
         label="",
         widget=forms.TextInput(
             attrs={
-                "placeholder": "search by name"
+                "placeholder": "search by name",
+                "class": "form-control form__input",
+                "style": "width: 150px;"
             }
         )
     )
