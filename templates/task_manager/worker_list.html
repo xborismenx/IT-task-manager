@@ -1,12 +1,15 @@
 {% extends "base.html" %}
 {% block content %}
-  <div class="container mt-3 mb-3">
-    <div class="d-flex justify-content-center">
-      <h1>Worker 
-        <a class="btn btn-primary pl-2" href="{% url 'task_manager:worker-create' %}">Add worker</a>
-      </h1>
-    </div>
-    {% for worker in worker_list %}
+  <div class="d-flex justify-content-center p-2">
+    <h1>Worker
+      <a class="btn btn-primary pl-2" href="{% url 'task_manager:worker-create' %}">Add worker</a>
+    </h1>
+  </div>
+  <form action="" method="get" class="form-inline d-flex justify-content-center align-items-center">
+    {{ search_form }}
+    <input type="submit" class="btn btn-primary" value="Find">
+  </form>
+  {% for worker in worker_list %}
 
       <div class="card mt-3">
         <div class="card-header">
