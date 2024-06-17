@@ -115,6 +115,7 @@ class TaskTypeDeleteView(LoginRequiredMixin, generic.DeleteView):
 
 class WorkerListView(LoginRequiredMixin, generic.ListView):
     model = Worker
+    paginate_by = 4
     template_name = "task_manager/worker_list.html"
     context_object_name = "worker_list"
 
