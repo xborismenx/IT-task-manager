@@ -131,6 +131,10 @@ AUTH_USER_MODEL = "task_manager.Worker"
 
 LOGIN_REDIRECT_URL = "/tasks/"
 
+LOGIN_URL = "/authorisation/"
+
+LOGOUT_REDIRECT_URL = "/authorisation/"
+
 INTERNAL_IPS = ["127.0.0.1", ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
