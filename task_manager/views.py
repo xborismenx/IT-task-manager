@@ -37,18 +37,43 @@ class TaskListView(LoginRequiredMixin, generic.ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        name = self.request.GET.get("name", "")
-        context["search_form"] = SearchTaskForm(initial={"name": name})
-        context["filterset"] = self.filterset
+        name = self.request.GET.get('name', '')
+        context['search_form'] = SearchTaskForm(initial={'name': name})
+
+        current_ordering_deadline, current_ordering_priority = self.get_ordering()
+        context['current_ordering_deadline'] = current_ordering_deadline
+        context['current_ordering_priority'] = current_ordering_priority
+        context['next_ordering'] = {
+            'deadline': 'deadline' if current_ordering_deadline == '-deadline' else '-deadline',
+            'priority': 'priority' if current_ordering_priority == '-priority' else '-priority'
+        }
+
+        task_types = TaskType.objects.annotate(task_count=Count('task'))
+        context['task_types'] = [
+            {
+                'name': task_type.name,
+                'task_count': task_type.task_count,
+                'task_pk': task_type.pk,
+            }
+            for task_type in task_types
+        ]
         return context
 
     def get_queryset(self):
-        queryset = Task.objects.select_related('task_type').prefetch_related('assignees')
-        name = self.request.GET.get("name")
+        queryset = Task.objects.select_related('task_type')
+        name = self.request.GET.get('name')
+        ordering_deadline, ordering_priority = self.get_ordering()
+
+        if ordering_deadline.startswith("-"):
+            queryset = queryset.order_by(ordering_deadline)
+
+        if ordering_priority.startswith("-"):
+            queryset = queryset.order_by(ordering_priority)
+
         if name:
             queryset = queryset.filter(name__icontains=name)
-        self.filterset = TaskFilter(self.request.GET, queryset=queryset)
-        return self.filterset.qs
+            return queryset
+        return queryset
 
 
 class TaskCreateView(generic.CreateView):
