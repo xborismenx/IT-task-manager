@@ -2,9 +2,9 @@
 {% if is_paginated %}
   <section class="py-7">
     <div class="container">
-      <div class="row justify-space-between py-2">
+      <div class="row py-2">
         <div class="col-lg-4 mx-auto">
-          <ul class="pagination pagination-primary m-4">
+          <ul class="pagination pagination-primary m-4 justify-content-center">
             <li class="page-item {% if not page_obj.has_previous %}disabled{% endif %}">
               <a class="page-link"
                  {% if page_obj.has_previous %}href="?{% query_transform request page=page_obj.previous_page_number %}{% endif %}"
