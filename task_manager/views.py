@@ -145,7 +145,7 @@ class WorkerCreateView(LoginRequiredMixin, generic.CreateView):
 class WorkerUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Worker
     fields = "__all__"
-    success_url = reverse_lazy("task_manager:worker")
+    success_url = reverse_lazy("task_manager:worker-list")
     template_name = "task_manager/worker_form.html"
 
 
