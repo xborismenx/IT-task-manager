@@ -3,7 +3,8 @@ from django.db.models import Count
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic
-from task_manager.forms import SearchTaskForm, TaskForm, WorkerRegistrationForm
+
+from task_manager.forms import SearchTaskForm, TaskForm, WorkerRegistrationForm, WorkerCreateUpdateForm
 from task_manager.models import Task, Worker, TaskType
 
 
@@ -137,14 +138,14 @@ class WorkerListView(LoginRequiredMixin, generic.ListView):
 
 class WorkerCreateView(LoginRequiredMixin, generic.CreateView):
     model = Worker
-    fields = "__all__"
+    form_class = WorkerCreateUpdateForm
     success_url = reverse_lazy("task_manager:worker-list")
     template_name = "task_manager/worker_form.html"
 
 
 class WorkerUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Worker
-    fields = "__all__"
+    form_class = WorkerCreateUpdateForm
     success_url = reverse_lazy("task_manager:worker-list")
     template_name = "task_manager/worker_form.html"
 
