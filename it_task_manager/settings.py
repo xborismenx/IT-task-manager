@@ -131,7 +131,7 @@ AUTH_USER_MODEL = "task_manager.Worker"
 
 LOGIN_REDIRECT_URL = "/tasks/"
 
-LOGIN_URL = "/authorisation/"
+LOGIN_URL = "/accounts/login/"
 
 LOGOUT_REDIRECT_URL = "/authorisation/"
 
