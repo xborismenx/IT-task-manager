@@ -4,8 +4,7 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
 
-from it_task_manager.settings import LOGIN_URL
-from task_manager.models import Position, TaskType, Task, Worker
+from task_manager.models import Position, TaskType, Task
 
 
 class TestModels(TestCase):
