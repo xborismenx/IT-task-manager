@@ -66,7 +66,6 @@ class FormsTest(TestCase):
         form = SearchWorkerForm(data=form_data)
         self.assertTrue(form.is_valid())
 
-
     def test_worker_create_update_form(self):
         position = Position.objects.create(name='Developer')
 
