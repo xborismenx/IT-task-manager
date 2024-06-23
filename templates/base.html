@@ -1,0 +1,16 @@
+{% extends "layouts/base_sections.html" %}
+{% block page_content %}
+  {% block navbar %}
+    {% include "includes/navbar.html" %}
+  {% endblock %}
+  <div class="container-fluid px-0">
+    <div class="col-sm-12">
+      {% block content %}
+      {% endblock %}
+      {% block pagination %}
+      {% endblock %}
+      {% block footer %}
+      {% endblock %}
+    </div>
+  </div>
+{% endblock %}

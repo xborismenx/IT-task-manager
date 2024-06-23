@@ -1,0 +1,42 @@
+
+<!-- Navbar Dark -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top z-index-3 py-3">
+  <div class="container">
+    <a class="navbar-brand text-dark" href="{% url 'task_manager:index' %}"
+       rel="tooltip" data-placement="bottom">
+      Task Manager
+    </a>
+    <div class="collapse navbar-collapse w-100 pt-3 pb-2 py-lg-0" id="navigation">
+      <ul class="navbar-nav navbar-nav-hover  mx-auto">
+        <li class="nav-item mx-2">
+          <a href="{% url 'task_manager:worker-list' %}"
+             class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center text-dark" role="button">
+            Workers
+          </a>
+        </li>
+
+        <li class="nav-item mx-2">
+          <a href="{% url 'task_manager:task-list' %}"
+             class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center text-dark" role="button">
+            Tasks
+          </a>
+        </li>
+
+        <li class="nav-item d-flex align-items-center">
+          {% if user.is_authenticated %}
+            <span class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center text-dark" role="button">
+      {{ user.username }}</span>
+            <div class="vr mx-2"></div>
+            <a class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center text-dark"
+               href="{% url 'logout' %}" role="button">Logout</a>
+          {% else %}
+            <a class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center text-dark"
+               href="{% url 'login' %}" role="button">Login</a>
+          {% endif %}
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- End Navbar -->
