@@ -16,7 +16,7 @@ Installation
 
 1. **Clone the repository:**
     ```sh
-    git clone [https://github.com/yourusername/task-manager.git](https://github.com/xborismenx/IT-task-manager.git)
+    git clone https://github.com/xborismenx/IT-task-manager.git
     cd task-manager
     ```
 
