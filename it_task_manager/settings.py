@@ -1,5 +1,8 @@
-import environ
 import os
+
+import environ
+import dj_database_url
+
 """
 Django settings for it_task_manager project.
 
@@ -28,9 +31,9 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env("DEBUG")
+DEBUG = os.environ.get("DEBUG", "") != "False"
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
 
 # Application definition
 
