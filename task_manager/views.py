@@ -1,11 +1,12 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Count
-from django.shortcuts import render, redirect
-from django.urls import reverse_lazy
+from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse_lazy, reverse
 from django.views import generic
 
-from task_manager.forms import SearchTaskForm, TaskForm, WorkerRegistrationForm, WorkerCreateUpdateForm
-from task_manager.models import Task, Worker, TaskType
+from task_manager.forms import SearchTaskForm, TaskForm, WorkerRegistrationForm, WorkerCreateForm, WorkerUpdateForm, \
+    CommentsForm
+from task_manager.models import Task, Worker, TaskType, Commentaries
 
 
 def index(request):
@@ -164,14 +165,14 @@ class WorkerListView(LoginRequiredMixin, generic.ListView):
 
 class WorkerCreateView(LoginRequiredMixin, generic.CreateView):
     model = Worker
-    form_class = WorkerCreateUpdateForm
+    form_class = WorkerCreateForm
     success_url = reverse_lazy("task_manager:worker-list")
     template_name = "task_manager/worker_form.html"
 
 
 class WorkerUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Worker
-    form_class = WorkerCreateUpdateForm
+    form_class = WorkerUpdateForm
     success_url = reverse_lazy("task_manager:worker-list")
     template_name = "task_manager/worker_form.html"
 
