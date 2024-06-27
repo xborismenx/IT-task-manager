@@ -3,6 +3,7 @@ from django.db.models import Count
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views import generic
+from django.views.generic import View
 
 from task_manager.forms import SearchTaskForm, TaskForm, WorkerRegistrationForm, WorkerCreateForm, WorkerUpdateForm, \
     CommentsForm
@@ -11,6 +12,10 @@ from task_manager.models import Task, Worker, TaskType, Commentaries
 
 def index(request):
     return render(request, "task_manager/index.html")
+
+
+def learn_more_1(request):
+    return render(request, "task_manager/learn-more-1.html")
 
 
 class AuthorisationView(generic.View):
