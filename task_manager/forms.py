@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 
-from task_manager.models import Task, Worker
+from task_manager.models import Task, Worker, Commentaries
 
 
 class WorkerRegistrationForm(UserCreationForm):
@@ -81,12 +81,44 @@ class SearchWorkerForm(forms.Form):
     )
 
 
-class WorkerCreateUpdateForm(UserCreationForm):
+class WorkerCreateForm(UserCreationForm):
     username = forms.CharField(max_length=100, required=True)
     first_name = forms.CharField(max_length=100, required=True)
     last_name = forms.CharField(max_length=100, required=True)
+    position = forms.CheckboxInput()
 
     class Meta:
         model = Worker
         fields = ('username', 'first_name', 'last_name', "position")
 
+
+class WorkerUpdateForm(forms.ModelForm):
+    username = forms.CharField(max_length=100, required=False)
+    first_name = forms.CharField(max_length=100, required=False)
+    last_name = forms.CharField(max_length=100, required=False)
+    position = forms.CheckboxInput()
+
+    class Meta:
+        model = Worker
+        fields = ('username', 'first_name', 'last_name', "position")
+
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        if not username and self.instance.pk:
+            return self.instance.username
+        return username
+
+
+class CommentsForm(forms.ModelForm):
+    content = forms.CharField(label="Comment:", required=False, widget=forms.Textarea(
+        attrs={
+            "placeholder": "Your comment...",
+            "class": "form-control fixed-size",
+            "rows": 3,
+            "style": "resize:none;"
+        }
+    ))
+
+    class Meta:
+        model = Commentaries
+        fields = ["content"]

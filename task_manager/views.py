@@ -1,15 +1,21 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Count
-from django.shortcuts import render, redirect
-from django.urls import reverse_lazy
+from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse_lazy, reverse
 from django.views import generic
+from django.views.generic import View
 
-from task_manager.forms import SearchTaskForm, TaskForm, WorkerRegistrationForm, WorkerCreateUpdateForm
-from task_manager.models import Task, Worker, TaskType
+from task_manager.forms import SearchTaskForm, TaskForm, WorkerRegistrationForm, WorkerCreateForm, WorkerUpdateForm, \
+    CommentsForm
+from task_manager.models import Task, Worker, TaskType, Commentaries
 
 
 def index(request):
     return render(request, "task_manager/index.html")
+
+
+def learn_more_1(request):
+    return render(request, "task_manager/learn-more-1.html")
 
 
 class AuthorisationView(generic.View):
@@ -88,6 +94,32 @@ class TaskDetailView(LoginRequiredMixin, generic.DetailView):
     model = Task
     template_name = "task_manager/task_detail.html"
 
+    def get_queryset(self):
+        return Task.objects.prefetch_related("assignees", "comments__worker", "comments__worker__position")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["comments_form"] = CommentsForm()
+        return context
+
+    def post(self, request, *args, **kwargs):
+        task = self.get_object()
+        content = request.POST.get("content")
+        worker = self.request.user
+        Commentaries.objects.create(task=task, content=content, worker=worker)
+        return redirect(self.get_success_url())
+
+    def get_success_url(self):
+        return reverse('task_manager:task-detail', kwargs={'pk': self.get_object().pk})
+
+
+class CommentDeleteView(LoginRequiredMixin, View):
+    def post(self, request, *args, **kwargs):
+        comment = get_object_or_404(Commentaries, pk=kwargs['pk'], worker=request.user)
+        task_pk = comment.task.pk
+        comment.delete()
+        return redirect('task_manager:task-detail', pk=task_pk)
+
 
 class TaskUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Task
@@ -138,14 +170,14 @@ class WorkerListView(LoginRequiredMixin, generic.ListView):
 
 class WorkerCreateView(LoginRequiredMixin, generic.CreateView):
     model = Worker
-    form_class = WorkerCreateUpdateForm
+    form_class = WorkerCreateForm
     success_url = reverse_lazy("task_manager:worker-list")
     template_name = "task_manager/worker_form.html"
 
 
 class WorkerUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Worker
-    form_class = WorkerCreateUpdateForm
+    form_class = WorkerUpdateForm
     success_url = reverse_lazy("task_manager:worker-list")
     template_name = "task_manager/worker_form.html"
 

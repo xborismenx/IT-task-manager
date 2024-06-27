@@ -1,9 +1,11 @@
 {% extends "base.html" %}
+{% load crispy_forms_filters %}
 {% block content %}
   <div class="container mt-5">
     <div class="card">
       <div class="card-header">
-        <h5 class="card-title">Task Details <a style="float: right" class="btn btn-primary" href="{% url 'task_manager:task-update' pk=task.pk %}">Change</a></h5>
+        <h5 class="card-title">Task Details <a style="float: right" class="btn btn-primary"
+                                               href="{% url 'task_manager:task-update' pk=task.pk %}">Change</a></h5>
       </div>
       <div class="card-body">
         <h6 class="card-subtitle mb-2 text-muted">Name: {{ task.name }}</h6>
@@ -23,7 +25,7 @@
         <p class="card-text"><strong>Task Type:</strong> {{ task.task_type.name }}</p>
         <p class="card-text"><strong>Assignees:</strong>
           {% for assignee in task.assignees.all %}
-            {{ assignee.username }} 
+            {{ assignee.username }}
           {% endfor %}
         </p>
         <p class="card-text"><strong>Status:</strong> {% if task.is_completed %}Completed{% else %}Executed{% endif %}
@@ -31,5 +33,29 @@
         <a class="btn btn-danger" href="{% url 'task_manager:task-delete' pk=task.pk %}">Delete</a>
       </div>
     </div>
+    <h1 class="text-center">Comments ({{ comments.count }}):</h1>
+
+    {% for comment in task.comments.all %}
+      <div class="bg-light p-3 mb-3 rounded">
+        {% if comment.worker == request.user %}
+          <p><strong>{{ comment.worker.username }} ({{ comment.worker.first_name }} {{ comment.worker.last_name }}) - position: {{ comment.worker.position }}
+            <form method="post" action="{% url 'task_manager:comment-delete' comment.pk %}">
+              {% csrf_token %}
+              <input class="float-right btn btn-dribbble" type="submit" value="x">
+            </form>
+          </strong></p>
+        {% else %}
+          <p><strong>{{ comment.worker.username }} ({{ comment.worker.first_name }} {{ comment.worker.last_name }}) - position: {{ comment.worker.position }}</strong></p>
+        {% endif %}
+        <p>{{ comment.content }}</p>
+        <p>{{ comment.create_date }}</p>
+      </div>
+    {% endfor %}
+    <form action="" method="post">
+      {% csrf_token %}
+      {{ comments_form|crispy }}
+      <input class="btn btn-primary mb-4 float-right" type="submit" value="send">
+    </form>
+
   </div>
 {% endblock %}

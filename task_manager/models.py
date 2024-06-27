@@ -31,6 +31,13 @@ class TaskType(models.Model):
         return self.name
 
 
+class Commentaries(models.Model):
+    task = models.ForeignKey("Task", on_delete=models.CASCADE, related_name="comments")
+    worker = models.ForeignKey(Worker, on_delete=models.DO_NOTHING)
+    content = models.TextField()
+    create_date = models.DateTimeField(auto_now_add=True)
+
+
 class Task(models.Model):
     class PriorityType(models.TextChoices):
         URGENT = "1", "Urgent"
