@@ -17,6 +17,7 @@ urlpatterns = [
     path("workers/<int:pk>/update/", views.WorkerUpdateView.as_view(), name="worker-update"),
     path("accounts/register/", views.WorkerRegisterView.as_view(), name="worker-register"),
     path("authorisation/", views.AuthorisationView.as_view(), name="authorisation"),
+    path("streamline-workflow/", views.learn_more_1, name="streamline-workflow"),
 ]
 
 app_name = "task_manager"
