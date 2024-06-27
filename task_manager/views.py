@@ -88,6 +88,32 @@ class TaskDetailView(LoginRequiredMixin, generic.DetailView):
     model = Task
     template_name = "task_manager/task_detail.html"
 
+    def get_queryset(self):
+        return Task.objects.prefetch_related("assignees", "comments__worker", "comments__worker__position")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["comments_form"] = CommentsForm()
+        return context
+
+    def post(self, request, *args, **kwargs):
+        task = self.get_object()
+        content = request.POST.get("content")
+        worker = self.request.user
+        Commentaries.objects.create(task=task, content=content, worker=worker)
+        return redirect(self.get_success_url())
+
+    def get_success_url(self):
+        return reverse('task_manager:task-detail', kwargs={'pk': self.get_object().pk})
+
+
+class CommentDeleteView(LoginRequiredMixin, View):
+    def post(self, request, *args, **kwargs):
+        comment = get_object_or_404(Commentaries, pk=kwargs['pk'], worker=request.user)
+        task_pk = comment.task.pk
+        comment.delete()
+        return redirect('task_manager:task-detail', pk=task_pk)
+
 
 class TaskUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Task
