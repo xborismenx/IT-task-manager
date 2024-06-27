@@ -18,7 +18,7 @@
           <input type="submit" class="btn btn-primary" value="Find">
         </form>
         <div class="table-responsive">
-          <table class="table table-hover table-striped tm-table-striped-even mt-3">
+          <table class="table table-hover border-bottom-lg table-striped tm-table-striped-even mt-3">
             <thead>
                 <tr>
                     <th>Is completed</th>
@@ -60,6 +60,7 @@
 
             </tbody>
           </table>
+          <hr>
           {% include 'includes/pagination.html' with task_list=task_list %}
         </div>
 
