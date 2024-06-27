@@ -5,6 +5,10 @@ A Django-based web application for managing tasks and workers. This application 
 # Live Demo
 https://it-task-manager-sv8p.onrender.com
 
+# Data test user
+- login: admin
+- pass: admin
+
 ## Features
 
 - User authentication and authorization
