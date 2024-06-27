@@ -12,6 +12,7 @@ A Django-based web application for managing tasks and workers. This application 
 - Priority setting for tasks
 - Task filtering and sorting
 - Pagination for task and worker lists
+- Added possibility to leave comments under the task
 Installation
 
 1. **Clone the repository:**
