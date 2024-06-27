@@ -13,7 +13,7 @@
       <div class="col-lg-12 tm-slider-col">
         <div class="tm-img-slider">
           <div class="tm-img-slider-item" href="img/gallery-img-04.jpg">
-            <p class="tm-slider-caption">"Efficiency is doing better what is already being done." - Peter Drucker</p>
+            <p class="tm-slider-caption z-index-0">"Efficiency is doing better what is already being done." - Peter Drucker</p>
             <img src="{% static 'img/gallery-img-04.jpg' %}" alt="Image" class="tm-slider-img">
           </div>
         </div>
@@ -30,7 +30,7 @@
           <p>Our task management tool is designed to streamline your workflow. Easily create and assign tasks, set
             priorities, and track progress. Increase your team's efficiency and productivity with our intuitive
             interface.</p>
-          <a href="#tm-section-3" class="btn tm-btn-pad-2 float-right">Learn More</a>
+          <a href="{% url 'task_manager:streamline-workflow' %}" class="btn tm-btn-pad-2 float-right">Learn More</a>
         </div>
         <div class="col-xl-4 col-lg-4 col-md-6 mb-lg-0 mb-md-5 mb-5 pr-md-5">
           <header class="text-center">
