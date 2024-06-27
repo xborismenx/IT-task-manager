@@ -35,7 +35,7 @@
     </div>
     <h1 class="text-center">Comments ({{ comments.count }}):</h1>
 
-    {% for comment in comments %}
+    {% for comment in task.comments.all %}
       <div class="bg-light p-3 mb-3 rounded">
         {% if comment.worker == request.user %}
           <p><strong>{{ comment.worker.username }} ({{ comment.worker.first_name }} {{ comment.worker.last_name }}) - position: {{ comment.worker.position }}
