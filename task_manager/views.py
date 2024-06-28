@@ -69,6 +69,7 @@ class TaskListView(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         queryset = Task.objects.select_related('task_type')
         name = self.request.GET.get('name')
+        task_type = self.request.GET.get('type')
         ordering_deadline, ordering_priority = self.get_ordering()
 
         if ordering_deadline.startswith("-"):
@@ -79,6 +80,9 @@ class TaskListView(LoginRequiredMixin, generic.ListView):
 
         if name:
             queryset = queryset.filter(name__icontains=name)
+            return queryset
+        if task_type:
+            queryset = queryset.filter(task_type__name=task_type)
             return queryset
         return queryset
 
@@ -161,7 +165,7 @@ class WorkerListView(LoginRequiredMixin, generic.ListView):
         return context
 
     def get_queryset(self):
-        queryset = Worker.objects.all()
+        queryset = Worker.objects.all().select_related("position")
         username = self.request.GET.get("name")
         if username:
             return queryset.filter(username__icontains=username)
