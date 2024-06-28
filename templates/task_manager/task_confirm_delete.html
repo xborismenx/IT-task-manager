@@ -10,6 +10,8 @@
           {% csrf_token %}
           <input class="btn btn-danger" type="submit" value="Delete">
         </form>
+        <h1>or</h1>
+        <a class="btn btn-secondary" href="{% url 'task_manager:task-list' %}">back</a>
       </div>
     </div>
   </div>
