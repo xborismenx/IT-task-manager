@@ -80,16 +80,18 @@
           </thead>
           <tbody>
           {% for type in task_types %}
-            {% if type.task_count > 0 %}
               <tr>
-                <td>{{ type.name }}</td>
+                {% if type.task_count > 0 %}
+                <td><a href="?type={{ type.name }}"><strong>{{ type.name }}</strong></a></td>
+                {% elif type.task_count == 0 %}
+                <td>{{ type.name }}</td>  
+                {% endif %}
                 <td>{{ type.task_count }}</td>
                 <td class="tm-trash-icon-cell">
                   <a href="{% url 'task_manager:task-type-delete' pk=type.task_pk %}"><i
                       class="fas fa-trash-alt tm-trash-icon"></i></a>
                 </td>
               </tr>
-            {% endif %}
           {% endfor %}
           </tbody>
         </table>
