@@ -13,7 +13,7 @@ https://it-task-manager-sv8p.onrender.com
 
 - User authentication and authorization
 - Task creation, updating, and deletion
-- Worker creation, updating, and deletion
+- Worker creation, updating
 - Task assignment to workers
 - Task categorization by type
 - Priority setting for tasks
